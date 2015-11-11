@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">LeanMeetingApp</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_moderator">ModeratorActivity</string>
+    <string name="title_activity_meeting_notes">MeetingNotesActivity</string>
+    <string name="title_activity_attendants_login">Login to the Meeting</string>
+    <string name="title_activity_login_successfull">LoginSuccessfullActivity</string>
+</resources>
