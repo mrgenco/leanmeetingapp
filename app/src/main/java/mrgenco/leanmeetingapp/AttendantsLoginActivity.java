@@ -45,7 +45,7 @@ public class AttendantsLoginActivity extends ActionBarActivity {
 
         HashMap<String,String> attendantInfo = dbTools.getAttendantInfo(ticket_id);
 
-        if(!attendantInfo.isEmpty() && attendantInfo.get("ticket_id").equals(ticket_id)){
+        if(!attendantInfo.isEmpty() && attendantInfo.get("ticket_id").equals(ticket_id) && attendantInfo.get("email").equals(email)){
 
             Toast.makeText(this.getApplicationContext(), "Login Successfull!"+ attendantInfo.get("name") , Toast.LENGTH_LONG);
 

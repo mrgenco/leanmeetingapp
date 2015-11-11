@@ -19,7 +19,7 @@ import java.util.HashMap;
 
 public class ModeratorActivity extends ActionBarActivity {
 
-    SQLiteDatabase attendantsDB = null;
+
     DBTools dbTools = new DBTools(this);
 
     Button inviteAttendantsButton, showAttendantsButton, addMeetingNotesButton;
@@ -38,9 +38,6 @@ public class ModeratorActivity extends ActionBarActivity {
         emailEditText = (EditText)findViewById(R.id.emailEditText);
         ticketIDEditText = (EditText)findViewById(R.id.ticketIDEditText);
 
-        //createDataBase();
-
-
     }
     public void addMeetingNotes(View view){
 
@@ -49,52 +46,12 @@ public class ModeratorActivity extends ActionBarActivity {
         startActivity(meetingNotesActivity);
     }
 
-    /*
-    *
-    *
-    *
-    * */
 
-    public void createDataBase(){
-
-        try{
-
-            // Opens a current database or creates it
-            // Pass the database name, designate that only this app can use it
-            // and a DatabaseErrorHandler in the case of database corruption
-            attendantsDB = this.openOrCreateDatabase("Attendants", MODE_PRIVATE, null);
-
-            // Execute an SQL statement that isn't select
-            attendantsDB.execSQL("CREATE TABLE IF NOT EXISTS attendants " +
-                    "(id integer primary key, name VARCHAR, email VARCHAR, ticket_id VARCHAR);");
-
-            // The database on the file system
-            File database = getApplicationContext().getDatabasePath("Attendants.db");
-
-
-            // Check if the database exists
-            if (database.exists()) {
-                Toast.makeText(this, "Database Created", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Database Missing", Toast.LENGTH_SHORT).show();
-            }
-
-        }
-
-        catch(Exception e){
-
-            Log.e("ATTENDANTS ERROR", "Error Creating Database");
-            inviteAttendantsButton.setClickable(false);
-        }
-
-    }
 
     public void inviteAttendant(View view){
 
 
-        HashMap<String, String> queryValues = null;
-
-        queryValues = new HashMap<String,String>();
+        HashMap<String, String> queryValues = new HashMap<String,String>();
 
         // Get the contact name and email entered
         String attendantName = nameEditText.getText().toString();
@@ -108,13 +65,6 @@ public class ModeratorActivity extends ActionBarActivity {
         dbTools.insertAttendant(queryValues);
 
         Toast.makeText(this, "Invitation has been sent successfully!", Toast.LENGTH_LONG);
-
-       /*
-        // Execute SQL statement to insert new data
-        attendantsDB.execSQL("INSERT INTO attendants (name, email, ticket_id) VALUES ('" +
-                attendantName + "', '" + attendantEmail + "', '" + attendantTicketID + "');");
-       */
-
 
     }
 
@@ -138,47 +88,6 @@ public class ModeratorActivity extends ActionBarActivity {
 
         Toast.makeText(this, attendantList, Toast.LENGTH_LONG).show();
 
-
-
-    /*    // A Cursor provides read and write access to database results
-        Cursor cursor = attendantsDB.rawQuery("SELECT * FROM attendants", null);
-
-        // Get the index for the column name provided
-        int idColumn = cursor.getColumnIndex("id");
-        int nameColumn = cursor.getColumnIndex("name");
-        int emailColumn = cursor.getColumnIndex("email");
-        int ticket_idColumn = cursor.getColumnIndex("ticket_id");
-
-        // Move to the first row of results
-        cursor.moveToFirst();
-
-        String attendantList = "";
-
-        // Verify that we have results
-        if(cursor != null && (cursor.getCount() > 0)){
-
-            do{
-                // Get the results and store them in a String
-                String id = cursor.getString(idColumn);
-                String name = cursor.getString(nameColumn);
-                String email = cursor.getString(emailColumn);
-                String ticket_id = cursor.getString(ticket_idColumn);
-
-                attendantList = attendantList + id + " : " + name + " : " + email + " : " + ticket_id+  "\n";
-
-                // Keep getting results as long as they exist
-            }while(cursor.moveToNext());
-
-            //contactListEditText.setText(contactList);
-            Toast.makeText(this, attendantList, Toast.LENGTH_LONG).show();
-        } else {
-
-            Toast.makeText(this, "No Results to Show", Toast.LENGTH_SHORT).show();
-            //contactListEditText.setText("");
-
-        }
-
-        */
 
     }
 
@@ -205,12 +114,4 @@ public class ModeratorActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    @Override
-    protected void onDestroy() {
-
-        //attendantsDB.close();
-
-        super.onDestroy();
-    }
 }
